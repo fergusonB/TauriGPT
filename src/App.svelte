@@ -2,10 +2,12 @@
   let messages = [];
   let currentMessage = '';
   let apiKey = 'Replace this with your API key "sk-..."';
-  let openaiApiKey = ''; // Replace with your OpenAI API key
+  let openaiApiKey = '';
+  let isLoading = false;
 
   async function sendMessage() {
   if (!currentMessage.trim()) return;
+  isLoading = true;
 
   const endpointUrl = 'https://api.openai.com/v1/chat/completions';
   const model = 'gpt-3.5-turbo';
@@ -34,6 +36,7 @@
   }
 
   messages = [...messages, ...messagesToSend.slice(1)];
+  isLoading = false;
 }
 
   function updateApiKey() {
@@ -56,6 +59,9 @@
         </div>
       {/each}
     </div>
+    {#if isLoading}
+    <div class="loading">Loading...</div>
+  {/if}
     <div class="chat-input">
       <form on:submit|preventDefault={sendMessage}>
         <input type="text" bind:value={currentMessage} />
@@ -68,71 +74,62 @@
 
 
 <style>
-  .chat-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
+.chat-message {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 10px 0;
+}
 
-  .chat-messages {
-    flex: 1;
-    overflow-y: scroll;
-  }
+.user .chat-message-content {
+  background-color: #2ecc71;
+  color: #fff;
+  border-radius: 10px 10px 0 10px;
+  padding: 10px;
+  margin-left: auto;
+}
 
-  .chat-message {
-    display: flex;
-    justify-content: flex-start;
-    margin: 10px;
-  }
+.ai .chat-message-content {
+  background-color: #f1f0f0;
+  color: #333;
+  border-radius: 10px 10px 10px 0;
+  padding: 10px;
+}
 
- 
+.chat-input {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  height: 60px;
+  width: 100%;
+}
 
-  .chat-message-content {
-    padding: 10px;
-    border-radius: 10px;
-    max-width: 80%;
-    word-break: break-word;
-  }
+.chat-input form {
+  display: flex;
+  flex: 1;
+  margin-right: 10px;
+}
 
-  .user .chat-message-content {
-    background-color: #2ecc71;
-    color: #fff;
-  }
+.chat-input input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  outline: none;
+}
 
-  .ai .chat-message-content {
-    background-color: #f1f0f0;
-    color: #333;
-  }
+.chat-input button {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #3498db;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
 
-  .chat-input {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-  }
-
-  .chat-input form {
-    display: flex;
-    flex: 1;
-    margin-right: 10px;
-  }
-
-  .chat-input input {
-    flex: 1;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-    outline: none;
-  }
-
-  .chat-input button {
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    background-color: #3498db;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-  }
 </style>
