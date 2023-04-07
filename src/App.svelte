@@ -1,5 +1,13 @@
 <script>
+   import { invoke } from '@tauri-apps/api/tauri'
   import Greet from './lib/Greet.svelte'
+  import SetApi from './lib/SetAPI.svelte';
+
+
+  // Assume you have a Tauri instance set up
+// ...
+
+
 </script>
 
 <main class="container">
@@ -21,9 +29,7 @@
     Click on the Tauri, Vite, and Svelte logos to learn more.
   </p>
 
-  <div class="row">
-    <Greet />
-  </div>
+  <SetApi/>
 
 </main>
 
