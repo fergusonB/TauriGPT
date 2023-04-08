@@ -77,7 +77,7 @@
 .chat-message {
   display: flex;
   justify-content: space-between;
-  margin: 10px 10px 0;
+  margin: 10px 10px 10px 10px;
 }
 
 .user .chat-message-content {
