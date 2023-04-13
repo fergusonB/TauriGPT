@@ -2,7 +2,7 @@
 name = "tauri_gpt"
 version = "0.0.1"
 description = "A cross-platform chatgpt that uses your api key and is built with Tauri and Svelte"
-authors = "Brenden Ferguson"
+authors = ["Brenden Ferguson", "SvelteKit Team", "Tauri Team"] 
 license = "MIT"
 repository = "taurigpt"
 edition = "2021"
