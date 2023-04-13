@@ -45,6 +45,7 @@
   }
   
 </script>
+<div class="app">
 <div class="api-key-input">
   <label for="api-key-field">API Key:</label>
   <input type="text" id="api-key-field" bind:value={apiKey} />
@@ -61,75 +62,96 @@
     </div>
     {#if isLoading}
     <div class="loading">Loading...</div>
-  {/if}
-    <div class="chat-input">
-      <form on:submit|preventDefault={sendMessage}>
-        <input type="text" bind:value={currentMessage} />
-        <button type="submit">Send</button>
-      </form>
-    </div>
+    {/if}
+
   </div>
+  <div class="chat-input">
+    <form on:submit|preventDefault={sendMessage}>
+      <input type="text" bind:value={currentMessage} />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+</div>
 
+  <style>
+.app{
+    height: 100%;
+    margin: 0;
+  }
 
-
-
-<style>
-.chat-message {
-  display: flex;
-  justify-content: space-between;
-  margin: 10px 10px 10px 10px;
-}
-
-.user .chat-message-content {
-  background-color: #2ecc71;
-  color: #fff;
-  border-radius: 10px 10px 0 10px;
-  padding: 10px;
-  margin-left: auto;
-}
-
-.ai .chat-message-content {
-  background-color: #f1f0f0;
-  color: #333;
-  border-radius: 10px 10px 10px 0;
-  padding: 10px;
-}
-
-.chat-input {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-  height: 60px;
-  width: 100%;
-}
-
-.chat-input form {
-  display: flex;
-  flex: 1;
-  margin-right: 10px;
-}
-
-.chat-input input {
-  flex: 1;
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  font-size: 16px;
-  outline: none;
-}
-
-.chat-input button {
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  background-color: #3498db;
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-</style>
+  
+    .chat-wrapper {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      height: 100%;
+    }
+  
+    .api-key-input {
+      grid-row-start: 1;
+      grid-row-end: 2;
+    }
+  
+    .chat-container {
+      grid-row-start: 2;
+      grid-row-end: 3;
+      overflow-y: auto;
+    }
+  
+    .chat-message {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px;
+    }
+  
+    .user .chat-message-content {
+      background-color: #2ecc71;
+      color: #fff;
+      border-radius: 10px 10px 0 10px;
+      padding: 10px;
+      margin-left: auto;
+    }
+  
+    .ai .chat-message-content {
+      background-color: #f1f0f0;
+      color: #333;
+      border-radius: 10px 10px 10px 0;
+      padding: 10px;
+    }
+  
+    .chat-input {
+      grid-row-start: 3;
+      grid-row-end: 4;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      height: 60px;
+      width: 100%;
+    }
+  
+    .chat-input form {
+      display: flex;
+      flex: 1;
+      margin-right: 10px;
+    }
+  
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      font-size: 16px;
+      outline: none;
+    }
+  
+    .chat-input button {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      background-color: #3498db;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+  </style>
