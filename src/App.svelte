@@ -49,7 +49,7 @@
   let chatMessagesRef;
 
 
-  
+   
 </script>
 <div class="app">
 <div class="api-key-input">
