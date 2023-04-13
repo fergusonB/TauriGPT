@@ -1,4 +1,5 @@
 <script>
+  import SvelteMarkdown from 'svelte-markdown'
   let messages = [];
   let currentMessage = '';
   let apiKey = 'Replace this with your API key "sk-..."';
@@ -56,7 +57,7 @@
     <div class="chat-messages">
       {#each messages as message}
         <div class="chat-message {message.role}">
-          <div class="chat-message-content">{message.content}</div>
+          <div class="chat-message-content"><SvelteMarkdown source={message.content}/></div>
         </div>
       {/each}
     </div>
