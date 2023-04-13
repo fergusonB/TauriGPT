@@ -1,10 +1,10 @@
 [package]
 name = "tauri_gpt"
-version = "0.0.0"
+version = "0.0.1"
 description = "A cross-platform chatgpt that uses your api key and is built with Tauri and Svelte"
-authors = ["you"]
-license = ""
-repository = ""
+authors = "Brenden Ferguson"
+license = "MIT"
+repository = "taurigpt"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
