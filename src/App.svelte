@@ -38,12 +38,17 @@
 
   messages = [...messages, ...messagesToSend.slice(1)];
   isLoading = false;
+
 }
 
   function updateApiKey() {
     openaiApiKey = apiKey;
     apiKey = '';
   }
+
+  let chatMessagesRef;
+
+
   
 </script>
 <div class="app">
@@ -131,9 +136,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: #fff;
     padding: 8px 16px;
-    border-top: 1px solid #ccc;
   }
 
   .chat-input form {
