@@ -53,8 +53,6 @@
     apiKey = '';
   }
 
-  let chatMessagesRef;
-
   function changeModel(event) {
     model = event.target.value;
   }
@@ -207,7 +205,7 @@
   animation: pulse 1s infinite ease-in-out;
 }
 
-/* Responsive styles */
+
 @media (max-width: 768px) {
   .api-key-input {
     flex-direction: column;
