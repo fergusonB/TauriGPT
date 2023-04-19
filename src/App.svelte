@@ -67,13 +67,14 @@
   <label for="api-key-field">API Key:</label>
   <input type="text" id="api-key-field" bind:value={apiKey} />
   <button on:click={updateApiKey}>Update</button>
-</div>
-<div class="model-selector">
-  <label for="model-selector">Model:</label>
-  <select id="model-selector" on:change={changeModel}>
-    <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
-    <option value="gpt4">GPT-4</option>
-  </select>
+  <div class="model-selector">
+    <label for="model-selector">Model:</label>
+    <select id="model-selector" on:change={changeModel}>
+      <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+      <option value="gpt4">GPT-4</option>
+    </select>
+  </div>
+  
 </div>
 
   <div class="chat-container">
@@ -83,10 +84,15 @@
           <div class="chat-message-content"><SvelteMarkdown source={message.content}/></div>
         </div>
       {/each}
+      {#if isLoading}
+      <div class="text-input__loading">
+        <div class="text-input__loading--line"></div>
+        <div class="text-input__loading--line"></div>
+        <div class="text-input__loading--line"></div>
+      </div>
+      {/if}
     </div>
-    {#if isLoading}
-    <div class="loading">Loading...</div>
-    {/if}
+
 
   </div>
   <div class="chat-input">
@@ -181,5 +187,24 @@
     font-size: 16px;
     cursor: pointer;
   }
+
+  .text-input__loading--line {
+  height: 10px;
+  margin: 10px;
+  animation: pulse 1s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: rgba(165, 165, 165, 0.1);
+  }
+  50% {
+    background-color: rgba(165, 165, 165, 0.3);
+  }
+  100% {
+    background-color: rgba(165, 165, 165, 0.1);
+  }
+}
+
     
   </style>
