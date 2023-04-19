@@ -18,7 +18,8 @@
   messages = [...messages, ...messagesToSend];
   currentMessage = '';
 
-  while (true) {
+  try {
+    while (true) {
     const response = await fetch(endpointUrl, {
       method: 'POST',
       headers: {
@@ -35,7 +36,13 @@
     if (data.choices[0].finish_reason === 'stop') {
       break;
     }
+   }
   }
+  catch{
+    const errorMessage = { role: 'error', content: "You don't have GPT-4 access." };
+    messagesToSend.push(errorMessage);
+  }
+  
 
   messages = [...messages, ...messagesToSend.slice(1)];
   isLoading = false;
