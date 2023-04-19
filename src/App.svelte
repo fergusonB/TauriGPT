@@ -5,13 +5,14 @@
   let apiKey = 'Replace this with your API key "sk-..."';
   let openaiApiKey = '';
   let isLoading = false;
+  let model = 'gpt-3.5-turbo';
 
   async function sendMessage() {
   if (!currentMessage.trim()) return;
   isLoading = true;
 
   const endpointUrl = 'https://api.openai.com/v1/chat/completions';
-  const model = 'gpt-3.5-turbo';
+  const selectedModel = model;
   const messagesToSend = [{ role: 'user', content: currentMessage }];
   
   messages = [...messages, ...messagesToSend];
@@ -24,7 +25,7 @@
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${openaiApiKey}`
       },
-      body: JSON.stringify({ model, messages: messagesToSend })
+      body: JSON.stringify({ model: selectedModel, messages: messagesToSend })
     });
 
     const data = await response.json();
@@ -48,6 +49,9 @@
 
   let chatMessagesRef;
 
+  function changeModel(event) {
+    model = event.target.value;
+  }
 
    
 </script>
@@ -56,6 +60,13 @@
   <label for="api-key-field">API Key:</label>
   <input type="text" id="api-key-field" bind:value={apiKey} />
   <button on:click={updateApiKey}>Update</button>
+</div>
+<div class="model-selector">
+  <label for="model-selector">Model:</label>
+  <select id="model-selector" on:change={changeModel}>
+    <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+    <option value="gpt4">GPT-4</option>
+  </select>
 </div>
 
   <div class="chat-container">
