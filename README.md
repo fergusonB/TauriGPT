@@ -9,7 +9,7 @@ TauriGPT is a powerful, lightweight, and user-friendly chat application that lev
 
 - Lightweight and responsive desktop application
 - Built with the powerful Tauri framework and SvelteKit
-- Supports OpenAI's GPT-3.5-turbo API
+- Supports OpenAI's GPT-3.5-turbo and GPT-4 API
 - Easy to set up and use, just bring your own API key
 - Cross-platform compatibility
 
