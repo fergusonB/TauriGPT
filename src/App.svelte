@@ -66,8 +66,10 @@
       <label for="model-selector">Model:</label>
       <select id="model-selector" on:change={changeModel}>
         <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+        <option value="gpt-3.5-turbo-0613">GPT-3.5 Turbo 0613</option>
+        <option value="gpt-3.5-turbo-16k">GPT-3.5 Turbo 16k</option>
         <option value="gpt4">GPT-4</option>
-      </select>
+      </select>      
     </div>
   </div>
 
