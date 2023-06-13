@@ -1,5 +1,5 @@
 <script>
-  import SvelteMarkdown from 'svelte-markdown'
+  import SvelteMarkdown from 'svelte-markdown';
   let messages = [];
   let currentMessage = '';
   let apiKey = 'Replace this with your API key "sk-..."';
@@ -7,75 +7,71 @@
   let isLoading = false;
   let model = 'gpt-3.5-turbo';
 
-  async function sendMessage() {
-  if (!currentMessage.trim()) return;
-  isLoading = true;
-
-  const endpointUrl = 'https://api.openai.com/v1/chat/completions';
-  const selectedModel = model;
-  const messagesToSend = [{ role: 'user', content: currentMessage }];
-  
-  messages = [...messages, ...messagesToSend];
-  currentMessage = '';
-
-  try {
-    while (true) {
+  async function fetchResponse(endpointUrl, selectedModel, messagesToSend) {
     const response = await fetch(endpointUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${openaiApiKey}`
+        'Authorization': `Bearer ${openaiApiKey}`,
       },
-      body: JSON.stringify({ model: selectedModel, messages: messagesToSend })
+      body: JSON.stringify({ model: selectedModel, messages: messagesToSend }),
     });
 
-    const data = await response.json();
-    const aiMessage = { role: 'ai', content:  data.choices[0].message.content };
-    messagesToSend.push(aiMessage);
+    return await response.json();
+  }
 
-    if (data.choices[0].finish_reason === 'stop') {
-      break;
+  async function generateAiMessage() {
+    const endpointUrl = 'https://api.openai.com/v1/chat/completions';
+    const selectedModel = model;
+    const messagesToSend = [{ role: 'user', content: currentMessage }];
+    let aiMessage;
+
+    try {
+      const data = await fetchResponse(endpointUrl, selectedModel, messagesToSend);
+      aiMessage = { role: 'ai', content: data.choices[0].message.content };
+    } catch (error) {
+      aiMessage = { role: 'error', content: "You don't have GPT-4 access." };
     }
-   }
-  }
-  catch{
-    const errorMessage = { role: 'error', content: "You don't have GPT-4 access." };
-    messagesToSend.push(errorMessage);
-  }
-  
 
-  messages = [...messages, ...messagesToSend.slice(1)];
-  isLoading = false;
+    return aiMessage;
+  }
 
-}
+  async function sendMessage() {
+    if (!currentMessage.trim()) return;
+    isLoading = true;
+
+    messages = [...messages, { role: 'user', content: currentMessage }];
+    currentMessage = '';
+
+    const aiMessage = await generateAiMessage();
+    messages = [...messages, aiMessage];
+    isLoading = false;
+  }
 
   function updateApiKey() {
     openaiApiKey = apiKey;
     apiKey = '';
   }
 
-  let chatMessagesRef;
-
   function changeModel(event) {
     model = event.target.value;
   }
-
-   
 </script>
 <div class="app">
-<div class="api-key-input">
-  <label for="api-key-field">API Key:</label>
-  <input type="text" id="api-key-field" bind:value={apiKey} />
-  <button on:click={updateApiKey}>Update</button>
-  <div class="model-selector">
-    <label for="model-selector">Model:</label>
-    <select id="model-selector" on:change={changeModel}>
-      <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
-      <option value="gpt4">GPT-4</option>
-    </select>
+  <div class="api-key-input">
+    <label for="api-key-field">API Key:</label>
+    <input type="text" id="api-key-field" bind:value={apiKey} />
+    <button on:click={updateApiKey}>Update</button>
+    <div class="model-selector">
+      <label for="model-selector">Model:</label>
+      <select id="model-selector" on:change={changeModel}>
+        <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+        <option value="gpt-3.5-turbo-0613">GPT-3.5 Turbo 0613</option>
+        <option value="gpt-3.5-turbo-16k">GPT-3.5 Turbo 16k</option>
+        <option value="gpt4">GPT-4</option>
+      </select>      
+    </div>
   </div>
-  
-</div>
 
   <div class="chat-container">
     <div class="chat-messages">
@@ -211,7 +207,7 @@
   animation: pulse 1s infinite ease-in-out;
 }
 
-/* Responsive styles */
+
 @media (max-width: 768px) {
   .api-key-input {
     flex-direction: column;
